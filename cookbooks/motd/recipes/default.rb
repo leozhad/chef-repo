@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-template "motd.tail" do
+template "/etc/motd.tail" do
   source "motd.tail.erb"
   owner "root"
   group "root"
