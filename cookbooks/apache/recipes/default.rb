@@ -19,7 +19,7 @@ file "/etc/httpd/conf.d/welcome.conf" do
   notifies :restart, "service[httpd]"
 end
 
-node['apache']['site'].each do |site_name, site_data|
+node['apache']['sites'].each do |site_name, site_data|
   document_root = "/var/www/vhosts/#{site_name}"
 
   directory "#{document_root}" do
