@@ -14,6 +14,13 @@ service "httpd" do
   action [:start, :enable]
 end
 
+execute "rm -f /etc/httpd/conf.d/welcome.conf" do
+  only_if do
+    ::File.exist?("/etc/httpd/conf.d/welcome.conf")
+  end
+  notifies :restart, "service[httpd]"
+end
+
 cookbook_file "/var/www/html/index.html" do
   source "index.html"
   mode "0644"
