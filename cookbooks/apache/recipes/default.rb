@@ -14,14 +14,12 @@ service "httpd" do
   action [:start, :enable]
 end
 
-execute "rm -f /etc/httpd/conf.d/welcome.conf" do
-  only_if do
-    ::File.exist?("/etc/httpd/conf.d/welcome.conf")
-  end
+file "/etc/httpd/conf.d/welcome.conf" do
+  action :delete
   notifies :restart, "service[httpd]"
 end
 
-node['apache']['sites'].each do |site_name, site_data|
+node['apache']['site'].each do |site_name, site_data|
   document_root = "/var/www/vhosts/#{site_name}"
 
   directory "#{document_root}" do
@@ -29,6 +27,7 @@ node['apache']['sites'].each do |site_name, site_data|
     group "root"
     mode 0755
     action :create
+    recursive true
   end
 
   directory "/etc/httpd/vhosts" do
@@ -36,6 +35,7 @@ node['apache']['sites'].each do |site_name, site_data|
     group "root"
     mode 0755
     action :create
+    recursive true
   end
 
   template "/etc/httpd/vhosts/#{site_name}" do

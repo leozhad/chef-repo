@@ -1,7 +1,8 @@
 <html>
   <body>
-    <marquee>Welcome to <%= node['company'] %></marquee>
+    <div><marquee>Welcome to <%= node['company'] %></marquee>
     <marquee>We love <%= @site_name %></marquee>
+    <marquee><iframe src="https://manage.opscode.com/" width="150%" height="60%"></iframe></marquee></div>
     <%= node['ipaddress'] %>:<%= @port %>
   </body>
 </html>
